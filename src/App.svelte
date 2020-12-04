@@ -1,6 +1,7 @@
 <script>
 	import ContactCard from './Card.svelte';
 	import { LoremIpsum } from "lorem-ipsum";
+	import Viz from "./Viz.svelte";
 
 	const lorem = new LoremIpsum({
 	sentencesPerParagraph: {
@@ -24,8 +25,8 @@
 	function getEmptyMessage(){
 		return {
 			body: null,
-			before: null,
-			after: null
+			before: [],
+			after: []
 		}
 	}
 	// function addMessage(msg, ) {
@@ -41,31 +42,32 @@
 		var keys = Object.keys(obj);
 		return obj[keys[ keys.length * Math.random() << 0]];
 	};
+	var randomKey = function (obj) {
+		var keys = Object.keys(obj);
+		return keys[ keys.length * Math.random() << 0];
+	};
 //
 	function handleRandomMessage() {
 		let msg_body = lorem.generateSentences(2);
-		console.log(msg_body);
-
 		let msg_hash = funhash(msg_body);
-		console.log(msg_hash)
-
 		let msg = getEmptyMessage()
+		
 		msg.body = msg_body;
-
 		messages[msg_hash] = msg;
-		messages = messages; // im sorry rich harris
 
 		if (focus === null) {
 			focus = msg_hash;
 		} else {
-			let append_to = randomProperty(messages);
-			console.log("append_to", append_to)
-
-			append_to.after = msg_hash;
-			messages = messages; //im sobbing
+			let r = randomKey(messages);
+			createLink(r, msg_hash);
 		}
 	}
 
+
+	function createLink(a, b) {
+		messages[a].after.push(b);
+		messages[b].before.push(a);
+	}
 
 // MISC
 
@@ -81,6 +83,8 @@
 </button>
 
 <h1>Focus: {focus}</h1>
+
+<Viz messages={messages} />
 
 
 <!-- <ContactCard>

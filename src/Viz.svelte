@@ -11,51 +11,107 @@
     import { DataSet } from 'vis-data';
 	import { Network } from "vis-network";
 
-	export let messages;
+    export let messages;
+    let breaks = -20;
+
+    let network = null;
+    let container = null;
+    
+    // var container = document.getElementById("mynetwork");
+
+    $: {
+        breaks = breaks;
+        network = makeNetwork(container, makeData(messages));
+    }
+
+    function makeNetwork(container, data) {
+        if ( container === null) return null;
+
+        return new Network(container, data, {});
+    }
+
+    function insertBreaks(text) {
+        var res = text.split(" ");
+        let newText = "";
+        var i = 0;
+
+        if (breaks < 0) {
+            return text.substr(0, -breaks);
+        }
+        
+        for (i = 0; i < res.length; i++) {
+            newText += res[i];
+            if ((i % breaks) == breaks-1) {
+                newText += "\n";
+            } else {
+                newText += " ";
+            }
+        }
+        
+        // console.log(newText);
+        return newText;
+    }
+
+    function makeNodes(messages) {
+        // for every message, make a node with id and label
+        var keys = Object.keys(messages);
+        var nodes = new DataSet([
+            //   { id: 1, label: "Node 1" },
+        ]);
+        keys.forEach(key => {
+            nodes.add({
+                id: key,
+                label: insertBreaks(messages[key].body)
+                // label: messages[key].body.substr(0, 5)
+            });
+            // console.log("message:", messages[key].body.substr(0, 5));
+        });
 
 
-    // create a network
+        return nodes;
+
+    }
+    function makeEdges(messages) {
+        var keys = Object.keys(messages);
+        var edges = new DataSet([]);
+        keys.forEach(key => {
+            messages[key].after.forEach(aft => {
+                // console.log("key", key, "-to", aft);
+                edges.add({ from: key, to: aft });
+            });
+
+            messages[key].before.forEach(bel => {
+                // console.log("key", key, "-to", aft);
+                edges.add({ from: bel, to: key });
+            });
+        });
+
+
+
+        return edges;
+    }
+    function makeData(messages) {
+        return {
+            nodes: makeNodes(messages),
+            edges: makeEdges(messages),
+        };
+    }
 
     onMount(async () => {
-        // const res = await fetch(`https://jsonplaceholder.typicode.com/photos?_limit=20`);
-        // photos = await res.json();
-            // create an array with nodes
-        var nodes = new DataSet([
-        { id: 1, label: "Node 1" },
-        { id: 2, label: "Node 2" },
-        { id: 3, label: "Node 3" },
-        { id: 4, label: "Node 4" },
-        { id: 5, label: "Node 5" },
-        ]);
-
-        // create an array with edges
-        var edges = new DataSet([
-        // { from: 1, to: 3 },
-        // { from: 1, to: 2 },
-        // { from: 2, to: 4 },
-        // { from: 2, to: 5 },
-        // { from: 3, to: 3 },
-        ]);
-
-        var container = document.getElementById("mynetwork");
-        var data = {
-            nodes: nodes,
-            edges: edges,
-        };
-        var options = {};
-        var network = new Network(container, data, options);
+        container = document.getElementById("mynetwork");
 	});
 </script>
 
 <style type="text/css">
     #mynetwork {
     width: 100%;
-    height: 400px;
+    height: 800px;
     border: 1px solid lightgray;
     }
 </style>
 
 
-<body>
-    <div id="mynetwork"></div>
-</body>
+<p>Cutoff: negative will preform substr. Positive will break by wordcount</p><input type=number bind:value={breaks} min=-50 max=10>
+
+
+<div id="mynetwork"></div>
