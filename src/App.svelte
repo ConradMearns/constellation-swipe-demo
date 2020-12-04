@@ -73,6 +73,7 @@
 
 	function handleReset () {
 		messages = {};
+		focus = null;
 	}
 
 	function gotoRandom() {
@@ -92,7 +93,7 @@
 // MISC
 
 	let messages = getExampleData01();
-	let focus = null;
+	let focus = 2746941700;
 
 </script>
 
@@ -140,6 +141,7 @@
 
 
 
+
 <!-- // the good stuff -->
 
 {#if SHOW_VIZ}
@@ -147,6 +149,8 @@
 {/if}
 
 {#if SHOW_SWIPE}
+<p>(If messages appear to overlap, toggle swipe on and off again.)</p>
+<h2>Swipe left and right on Before and After cards to browse branches</h2>
 	<Conversation messages={messages} focus={focus} />
 {/if}
 
