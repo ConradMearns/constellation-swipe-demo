@@ -16,11 +16,9 @@
 
     let network = null;
     let container = null;
-    
-    // var container = document.getElementById("mynetwork");
 
     $: {
-        breaks = breaks;
+        breaks = breaks; // this update gets executed whenever something on the RHS of an assignment is updated
         network = makeNetwork(container, makeData(messages));
     }
 
@@ -76,17 +74,13 @@
         var edges = new DataSet([]);
         keys.forEach(key => {
             messages[key].after.forEach(aft => {
-                // console.log("key", key, "-to", aft);
                 edges.add({ from: key, to: aft });
             });
 
             messages[key].before.forEach(bel => {
-                // console.log("key", key, "-to", aft);
                 edges.add({ from: bel, to: key });
             });
         });
-
-
 
         return edges;
     }

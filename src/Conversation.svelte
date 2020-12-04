@@ -1,59 +1,133 @@
-<!-- 
-
-    Mostly from API on svelte-swipe
-
- -->
-
-
 <script>
+    import ContactCard from './Card.svelte';
+    import { Swipe, SwipeItem } from "svelte-swipe";
+    import { LoremIpsum } from "lorem-ipsum";
 
-  import { Swipe, SwipeItem } from "svelte-swipe";
+    export let focus;
+    export let messages;
 
-  const swipeConfig = {
-    autoplay: false,
-    delay: 2000,
-    showIndicators: false,
-    transitionDuration: 100,
-    defaultIndex: 0,
-  };
+	const lorem = new LoremIpsum({
+	sentencesPerParagraph: {
+		max: 8,
+		min: 4
+	},
+	wordsPerSentence: {
+		max: 16,
+		min: 4
+	}
+	});
+
+    const swipeConfig = {
+        autoplay: false,
+        delay: 2000,
+        showIndicators: false,
+        transitionDuration: 100,
+        defaultIndex: 0,
+    };
+
 </script>
 
 <style>
-  .swipe-holder{
-    height: 30vh;
-    width: 100%;
-	background: red;
-  }
-
-.test{
-	background: gray;
-}
-
+    .swipe-holder{
+        height: 25vh;
+        width: 100%;
+        /* background: lightblue; */
+    }
 </style>
 
+
+{#if focus===null}
+    <p>Nothing yet! Add random message to get started :)</p>
+{:else}
+
+
 <div class="swipe-holder">
-  <Swipe {...swipeConfig}>
-    <SwipeItem>
-      <!-- <img src="./ima/ges/1.jpg" alt=""> -->
-	  <!-- <h1>Hello!</h1> -->
-		<div class="test">
-		hello mudda
-		</div>
-    </SwipeItem>
 
-    <SwipeItem>
-      <!-- <img src="./images/2.jpg" alt=""> -->
-	  <h1>Hello!</h1>
-    </SwipeItem>
+    <Swipe {...swipeConfig}>
+    {#each messages[focus].before as bef}
+        <SwipeItem>
+            <ContactCard>
+                <span slot="name">
+                    Before
+                </span>
+                <span slot="message">
+                    {messages[bef].body}
+                </span>
+            </ContactCard>
+        </SwipeItem>
+    {/each}
+    </Swipe>
 
-    <SwipeItem>
-      <!-- <img src="./images/3.jpg" alt=""> -->
-	  <h1>Hello!</h1>
-    </SwipeItem>
 
-    <SwipeItem>
-      <!-- <img src="./images/4.jpg" alt=""> -->
-	  <h1>Hello!</h1>
-    </SwipeItem>
-  </Swipe>
+    <Swipe {...swipeConfig}>
+        <SwipeItem>
+            <ContactCard>
+                <span slot="name">
+                    Focus (this shows how swiping _should_ work)
+                </span>
+                <span slot="message">
+                    {messages[focus].body}
+                </span>
+
+            </ContactCard>
+        </SwipeItem>
+
+        <SwipeItem>
+            <ContactCard>
+                <span slot="name">
+                    Theres another message too
+                </span>
+                <span slot="message">
+                    {messages[focus].body}
+                </span>
+
+            </ContactCard>
+        </SwipeItem>
+
+        <SwipeItem>
+            <ContactCard>
+                <span slot="name">
+                    Keep 'adding random' until before and after have swipes available...
+                </span>
+                <span slot="message">
+                    {messages[focus].body}
+                </span>
+
+            </ContactCard>
+        </SwipeItem>
+    </Swipe>
+
+
+
+    <Swipe {...swipeConfig}>
+    {#each messages[focus].after as aft}
+        <SwipeItem>
+            <ContactCard>
+                <span slot="name">
+                    After
+                </span>
+                <span slot="message">
+                    {messages[aft].body}
+                </span>
+            </ContactCard>
+        </SwipeItem>
+    {/each}
+    </Swipe>
+
+
 </div>
+
+
+{/if}
+
+
+
+
+
+<!-- idk, i just like my scraps -->
+
+
+
+                <!-- <span slot="name">
+                    P. Sherman
+                </span> -->

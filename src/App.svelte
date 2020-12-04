@@ -1,7 +1,7 @@
 <script>
-	import ContactCard from './Card.svelte';
-	import { LoremIpsum } from "lorem-ipsum";
+	import Conversation from './Conversation.svelte';
 	import Viz from "./Viz.svelte";
+	import { LoremIpsum } from "lorem-ipsum";
 
 	const lorem = new LoremIpsum({
 	sentencesPerParagraph: {
@@ -15,11 +15,9 @@
 	});
 
 
-// Add random message to current focus
-	let count = 0;
-	function handleClick() {
-		count += 1;
-	}
+	let SHOW_VIZ = false;
+	let SHOW_SWIPE = true;
+
 
 // data utilities
 	function getEmptyMessage(){
@@ -77,28 +75,28 @@
 </script>
 
 
+<!-- // BUTTONS AND DEMO CONTROLS -->
 
+<h1>Focus: {focus}</h1>
 <button on:click={handleRandomMessage}>
 	ADD RANDOM
 </button>
 
-<h1>Focus: {focus}</h1>
+<button on:click={() => {SHOW_VIZ = !SHOW_VIZ}}>
+	{SHOW_VIZ ? 'Showing vis-network' : 'Hiding vis-network'}
+</button>
 
-<Viz messages={messages} />
+<button on:click={() => {SHOW_SWIPE = !SHOW_SWIPE}}>
+	{SHOW_SWIPE ? 'Showing swipe' : 'Hiding swipe'}
+</button>
 
 
-<!-- <ContactCard>
-	<span slot="name">
-		P. Sherman
-	</span>
+<!-- // the good stuff -->
 
-	<span slot="message">
-		{msg}
-		
-		<br />
-		<button on:click={handleClick}>
-			Reply
-		</button>
-	</span>
+{#if SHOW_VIZ}
+	<Viz messages={messages} />
+{/if}
 
-</ContactCard> -->
+{#if SHOW_SWIPE}
+	<Conversation messages={messages} focus={focus} />
+{/if}
