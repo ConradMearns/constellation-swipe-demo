@@ -35,7 +35,7 @@
 <article class="contact-card">
 	<h2>
 		<slot name="name">
-			<span class="missing">Anonymous</span>
+			<!-- <span class="missing">Anonymous</span> -->
 		</slot>
 	</h2>
 

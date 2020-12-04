@@ -44,11 +44,11 @@
 <div class="swipe-holder">
 
     <Swipe {...swipeConfig}>
-    {#each messages[focus].before as bef}
+    {#each messages[focus].before as bef, i}
         <SwipeItem>
             <ContactCard>
                 <span slot="name">
-                    Before
+                    (Before) ({i+1}/{messages[focus].before.length}) {bef}
                 </span>
                 <span slot="message">
                     {messages[bef].body}
@@ -63,7 +63,7 @@
         <SwipeItem>
             <ContactCard>
                 <span slot="name">
-                    Focus (this shows how swiping _should_ work)
+                    (Focus) {focus}
                 </span>
                 <span slot="message">
                     {messages[focus].body}
@@ -71,40 +71,16 @@
 
             </ContactCard>
         </SwipeItem>
-
-        <!-- <SwipeItem>
-            <ContactCard>
-                <span slot="name">
-                    Theres another message too
-                </span>
-                <span slot="message">
-                    {messages[focus].body}
-                </span>
-
-            </ContactCard>
-        </SwipeItem>
-
-        <SwipeItem>
-            <ContactCard>
-                <span slot="name">
-                    Keep 'adding random' until before and after have swipes available...
-                </span>
-                <span slot="message">
-                    {messages[focus].body}
-                </span>
-
-            </ContactCard>
-        </SwipeItem> -->
     </Swipe>
 
 
 
     <Swipe {...swipeConfig}>
-    {#each messages[focus].after as aft}
+    {#each messages[focus].after as aft, i}
         <SwipeItem>
             <ContactCard>
                 <span slot="name">
-                    After
+                    (After) ({i+1}/{messages[focus].after.length}) {aft}
                 </span>
                 <span slot="message">
                     {messages[aft].body}

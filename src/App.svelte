@@ -2,6 +2,8 @@
 	import Conversation from './Conversation.svelte';
 	import Viz from "./Viz.svelte";
 	import { LoremIpsum } from "lorem-ipsum";
+	// import './example.js';
+	import { getExampleData01 } from './examples.js';
 
 	const lorem = new LoremIpsum({
 	sentencesPerParagraph: {
@@ -44,7 +46,9 @@
 		var keys = Object.keys(obj);
 		return keys[ keys.length * Math.random() << 0];
 	};
-//
+
+
+// handles
 	function handleRandomMessage() {
 		let msg_body = lorem.generateSentences(2);
 		let msg_hash = funhash(msg_body);
@@ -61,19 +65,33 @@
 		}
 	}
 
+	function handleRandomLink() {
+		let a = randomKey(messages);
+		let b = randomKey(messages);
+		createLink(a, b);
+	}
+
 	function handleReset () {
 		messages = {};
 	}
 
+	function gotoRandom() {
+		focus = randomKey(messages);
+	}
+
+///
 
 	function createLink(a, b) {
+		if (!messages[a].after.includes(b)) 
 		messages[a].after.push(b);
+
+		if (!messages[a].before.includes(a)) 
 		messages[b].before.push(a);
 	}
 
 // MISC
 
-	let messages = {};
+	let messages = getExampleData01();
 	let focus = null;
 
 </script>
@@ -82,13 +100,28 @@
 <!-- // BUTTONS AND DEMO CONTROLS -->
 
 <h1>Focus: {focus}</h1>
+<button on:click={gotoRandom}>
+	GOTO RANDOM
+</button>
+
+<br />
+
 <button on:click={handleReset}>
 	RESET
 </button>
 
 <button on:click={handleRandomMessage}>
-	ADD RANDOM
+	ADD RANDOM MSG
 </button>
+
+<button on:click={handleRandomLink}>
+	ADD RANDOM LINK
+</button>
+
+
+
+<br />
+
 
 <button on:click={() => {SHOW_VIZ = !SHOW_VIZ}}>
 	{SHOW_VIZ ? 'Showing vis-network' : 'Hiding vis-network'}
