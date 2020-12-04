@@ -72,7 +72,7 @@
             </ContactCard>
         </SwipeItem>
 
-        <SwipeItem>
+        <!-- <SwipeItem>
             <ContactCard>
                 <span slot="name">
                     Theres another message too
@@ -94,7 +94,7 @@
                 </span>
 
             </ContactCard>
-        </SwipeItem>
+        </SwipeItem> -->
     </Swipe>
 
 

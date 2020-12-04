@@ -16,7 +16,8 @@
 
 
 	let SHOW_VIZ = false;
-	let SHOW_SWIPE = true;
+	let SHOW_SWIPE = false;
+	let SHOW_DEBUG = true;
 
 
 // data utilities
@@ -27,14 +28,13 @@
 			after: []
 		}
 	}
-	// function addMessage(msg, ) {
 
-	// }
+
 // Add new random message
 	var funhash = function(s) {
 		for(var i = 0, h = 0xdeadbeef; i < s.length; i++)
 			h = Math.imul(h ^ s.charCodeAt(i), 2654435761);
-		return (h ^ h >>> 16) >>> 0;
+		return ""+((h ^ h >>> 16) >>> 0);
 	};
 	var randomProperty = function (obj) {
 		var keys = Object.keys(obj);
@@ -61,6 +61,10 @@
 		}
 	}
 
+	function handleReset () {
+		messages = {};
+	}
+
 
 	function createLink(a, b) {
 		messages[a].after.push(b);
@@ -78,6 +82,10 @@
 <!-- // BUTTONS AND DEMO CONTROLS -->
 
 <h1>Focus: {focus}</h1>
+<button on:click={handleReset}>
+	RESET
+</button>
+
 <button on:click={handleRandomMessage}>
 	ADD RANDOM
 </button>
@@ -90,6 +98,14 @@
 	{SHOW_SWIPE ? 'Showing swipe' : 'Hiding swipe'}
 </button>
 
+<button on:click={() => {SHOW_DEBUG = !SHOW_DEBUG}}>
+	{SHOW_DEBUG ? 'Showing state debug' : 'Hiding state debug'}
+</button>
+
+
+
+
+
 
 <!-- // the good stuff -->
 
@@ -99,4 +115,12 @@
 
 {#if SHOW_SWIPE}
 	<Conversation messages={messages} focus={focus} />
+{/if}
+
+
+{#if SHOW_DEBUG}
+<pre>
+State Debug:
+{JSON.stringify(messages, null, " ")}
+</pre>
 {/if}
