@@ -395,7 +395,7 @@ export function getExampleData01() {
    "1121457483"
   ]
  },
- "2746941700": {
+ "1": {
   "body": "Non fugiat sint consectetur in in. Sint in elit minim eu dolor aliqua anim consectetur dolor ullamco voluptate pariatur Lorem.",
   "before": [
    "1607972564",
@@ -632,4 +632,16 @@ export function getExampleData01() {
   ]
  }
 }
+}
+
+
+
+export function getExampleData02() {
+    return {
+        "1": {
+            "body": "Esse amet pariatur irure quis. Commodo amet duis aute sint voluptate excepteur tempor aliquip ipsum.",
+            "before": [],
+            "after": []
+           }
+    };
 }

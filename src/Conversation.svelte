@@ -1,5 +1,6 @@
 <script>
-    import ContactCard from './Card.svelte';
+    // import ContactCard from './Card.svelte';
+    import Message from './Message.svelte';
     import { Swipe, SwipeItem } from "svelte-swipe";
     import { LoremIpsum } from "lorem-ipsum";
 
@@ -43,67 +44,56 @@
 
 <div class="swipe-holder">
 
+    {#if messages[focus].before.length > 0}
     <Swipe {...swipeConfig}>
     {#each messages[focus].before as bef, i}
         <SwipeItem>
-            <ContactCard>
+            <!-- <ContactCard>
                 <span slot="name">
                     (Before) ({i+1}/{messages[focus].before.length}) {bef}
                 </span>
                 <span slot="message">
                     {messages[bef].body}
                 </span>
-            </ContactCard>
+            </ContactCard> -->
+            <Message 
+                body={messages[bef].body}
+                index={i+1}
+                index_limit={messages[focus].before.length}
+                id={bef}
+            />
         </SwipeItem>
     {/each}
     </Swipe>
+    {/if}
 
 
     <Swipe {...swipeConfig}>
         <SwipeItem>
-            <ContactCard>
-                <span slot="name">
-                    (Focus) {focus}
-                </span>
-                <span slot="message">
-                    {messages[focus].body}
-                </span>
-
-            </ContactCard>
+            <Message 
+                body={messages[focus].body}
+                id={focus}
+            />
         </SwipeItem>
     </Swipe>
 
 
-
+    {#if messages[focus].after.length > 0}
     <Swipe {...swipeConfig}>
     {#each messages[focus].after as aft, i}
         <SwipeItem>
-            <ContactCard>
-                <span slot="name">
-                    (After) ({i+1}/{messages[focus].after.length}) {aft}
-                </span>
-                <span slot="message">
-                    {messages[aft].body}
-                </span>
-            </ContactCard>
+            <Message 
+                body={messages[aft].body}
+                index={i+1}
+                index_limit={messages[focus].after.length}
+                id={aft}
+            />
         </SwipeItem>
     {/each}
     </Swipe>
-
+    {/if}
 
 </div>
 
 
 {/if}
-
-
-
-
-
-<!-- idk, i just like my scraps -->
-
-
-
-                <!-- <span slot="name">
-                    P. Sherman
-                </span> -->

@@ -3,7 +3,9 @@
 	import Viz from "./Viz.svelte";
 	import { LoremIpsum } from "lorem-ipsum";
 	// import './example.js';
-	import { getExampleData01 } from './examples.js';
+	import { getExampleData01, getExampleData02 } from './examples.js';
+
+	let getExampleData = getExampleData02;
 
 	const lorem = new LoremIpsum({
 	sentencesPerParagraph: {
@@ -18,8 +20,8 @@
 
 
 	let SHOW_VIZ = false;
-	let SHOW_SWIPE = false;
-	let SHOW_DEBUG = true;
+	let SHOW_SWIPE = true;
+	let SHOW_DEBUG = false;
 
 
 // data utilities
@@ -31,6 +33,13 @@
 		}
 	}
 
+	function createNewMessage(msg){
+		let newMsg = getEmptyMessage();
+		let msg_hash = funhash(msg);
+		newMsg.body = msg;
+		messages[msg_hash] = newMsg;
+		createLink(focus, msg_hash);
+	}
 
 // Add new random message
 	var funhash = function(s) {
@@ -69,11 +78,20 @@
 		let a = randomKey(messages);
 		let b = randomKey(messages);
 		createLink(a, b);
+		messages = messages; // sorry rich
 	}
 
 	function handleReset () {
 		messages = {};
 		focus = null;
+	}
+
+	function handleAttachToFocus() {
+		if (next_message != null && next_message != "") {
+			let newMsg = createNewMessage(next_message);
+			next_message = "";
+			// createLink(focus, newMsg);
+		}
 	}
 
 	function gotoRandom() {
@@ -92,15 +110,20 @@
 
 // MISC
 
-	let messages = getExampleData01();
-	let focus = 2746941700;
+	let messages = getExampleData();
+	let focus = "1";
+
+	let focus_list = [];
+
+	let next_message = "";
 
 </script>
 
 
 <!-- // BUTTONS AND DEMO CONTROLS -->
 
-<h1>Focus: {focus}</h1>
+<!-- <h1>Focus: {focus}</h1> -->
+
 <button on:click={gotoRandom}>
 	GOTO RANDOM
 </button>
@@ -151,6 +174,8 @@
 {#if SHOW_SWIPE}
 <p>(If messages appear to overlap, toggle swipe on and off again.)</p>
 <h2>Swipe left and right on Before and After cards to browse branches</h2>
+	<input bind:value={next_message} >
+	<button on:click={handleAttachToFocus}>ATTACH TO FOCUS</button>
 	<Conversation messages={messages} focus={focus} />
 {/if}
 
