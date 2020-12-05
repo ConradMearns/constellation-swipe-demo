@@ -12209,7 +12209,7 @@ var app = (function () {
 
     const file$6 = "src/App.svelte";
 
-    // (170:0) {#if SHOW_VIZ}
+    // (178:0) {#if SHOW_VIZ}
     function create_if_block_2$1(ctx) {
     	let viz;
     	let current;
@@ -12250,14 +12250,14 @@ var app = (function () {
     		block,
     		id: create_if_block_2$1.name,
     		type: "if",
-    		source: "(170:0) {#if SHOW_VIZ}",
+    		source: "(178:0) {#if SHOW_VIZ}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (174:0) {#if SHOW_SWIPE}
+    // (182:0) {#if SHOW_SWIPE}
     function create_if_block_1$1(ctx) {
     	let p;
     	let t1;
@@ -12294,10 +12294,10 @@ var app = (function () {
     			button.textContent = "ATTACH TO FOCUS";
     			t6 = space();
     			create_component(conversation.$$.fragment);
-    			add_location(p, file$6, 174, 0, 3119);
-    			add_location(h2, file$6, 175, 0, 3190);
-    			add_location(input, file$6, 176, 1, 3266);
-    			add_location(button, file$6, 177, 1, 3302);
+    			add_location(p, file$6, 182, 0, 3251);
+    			add_location(h2, file$6, 183, 0, 3322);
+    			add_location(input, file$6, 184, 1, 3398);
+    			add_location(button, file$6, 185, 1, 3434);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -12314,7 +12314,7 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(input, "input", /*input_input_handler*/ ctx[14]),
+    					listen_dev(input, "input", /*input_input_handler*/ ctx[15]),
     					listen_dev(button, "click", /*handleAttachToFocus*/ ctx[9], false, false, false)
     				];
 
@@ -12359,14 +12359,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(174:0) {#if SHOW_SWIPE}",
+    		source: "(182:0) {#if SHOW_SWIPE}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (183:0) {#if SHOW_DEBUG}
+    // (191:0) {#if SHOW_DEBUG}
     function create_if_block$2(ctx) {
     	let pre;
     	let t0;
@@ -12378,7 +12378,7 @@ var app = (function () {
     			pre = element("pre");
     			t0 = text("State Debug:\n");
     			t1 = text(t1_value);
-    			add_location(pre, file$6, 183, 0, 3443);
+    			add_location(pre, file$6, 191, 0, 3575);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, pre, anchor);
@@ -12397,7 +12397,7 @@ var app = (function () {
     		block,
     		id: create_if_block$2.name,
     		type: "if",
-    		source: "(183:0) {#if SHOW_DEBUG}",
+    		source: "(191:0) {#if SHOW_DEBUG}",
     		ctx
     	});
 
@@ -12407,38 +12407,40 @@ var app = (function () {
     function create_fragment$6(ctx) {
     	let button0;
     	let t1;
-    	let br0;
-    	let t2;
     	let button1;
+    	let t3;
+    	let br0;
     	let t4;
     	let button2;
     	let t6;
     	let button3;
     	let t8;
-    	let br1;
-    	let t9;
     	let button4;
+    	let t10;
+    	let br1;
+    	let t11;
+    	let button5;
 
-    	let t10_value = (/*SHOW_VIZ*/ ctx[0]
+    	let t12_value = (/*SHOW_VIZ*/ ctx[0]
     	? "Showing vis-network"
     	: "Hiding vis-network") + "";
 
-    	let t10;
-    	let t11;
-    	let button5;
-    	let t12_value = (/*SHOW_SWIPE*/ ctx[1] ? "Showing swipe" : "Hiding swipe") + "";
     	let t12;
     	let t13;
     	let button6;
+    	let t14_value = (/*SHOW_SWIPE*/ ctx[1] ? "Showing swipe" : "Hiding swipe") + "";
+    	let t14;
+    	let t15;
+    	let button7;
 
-    	let t14_value = (/*SHOW_DEBUG*/ ctx[2]
+    	let t16_value = (/*SHOW_DEBUG*/ ctx[2]
     	? "Showing state debug"
     	: "Hiding state debug") + "";
 
-    	let t14;
-    	let t15;
     	let t16;
     	let t17;
+    	let t18;
+    	let t19;
     	let if_block2_anchor;
     	let current;
     	let mounted;
@@ -12452,21 +12454,21 @@ var app = (function () {
     			button0 = element("button");
     			button0.textContent = "GOTO RANDOM";
     			t1 = space();
-    			br0 = element("br");
-    			t2 = space();
     			button1 = element("button");
-    			button1.textContent = "RESET";
+    			button1.textContent = "LOAD EXAMPLE";
+    			t3 = space();
+    			br0 = element("br");
     			t4 = space();
     			button2 = element("button");
-    			button2.textContent = "ADD RANDOM MSG";
+    			button2.textContent = "RESET";
     			t6 = space();
     			button3 = element("button");
-    			button3.textContent = "ADD RANDOM LINK";
+    			button3.textContent = "ADD RANDOM MSG";
     			t8 = space();
-    			br1 = element("br");
-    			t9 = space();
     			button4 = element("button");
-    			t10 = text(t10_value);
+    			button4.textContent = "ADD RANDOM LINK";
+    			t10 = space();
+    			br1 = element("br");
     			t11 = space();
     			button5 = element("button");
     			t12 = text(t12_value);
@@ -12474,21 +12476,25 @@ var app = (function () {
     			button6 = element("button");
     			t14 = text(t14_value);
     			t15 = space();
-    			if (if_block0) if_block0.c();
-    			t16 = space();
-    			if (if_block1) if_block1.c();
+    			button7 = element("button");
+    			t16 = text(t16_value);
     			t17 = space();
+    			if (if_block0) if_block0.c();
+    			t18 = space();
+    			if (if_block1) if_block1.c();
+    			t19 = space();
     			if (if_block2) if_block2.c();
     			if_block2_anchor = empty();
-    			add_location(button0, file$6, 126, 0, 2404);
-    			add_location(br0, file$6, 130, 0, 2459);
-    			add_location(button1, file$6, 132, 0, 2467);
-    			add_location(button2, file$6, 136, 0, 2517);
-    			add_location(button3, file$6, 140, 0, 2584);
-    			add_location(br1, file$6, 146, 0, 2651);
-    			add_location(button4, file$6, 149, 0, 2660);
-    			add_location(button5, file$6, 153, 0, 2779);
-    			add_location(button6, file$6, 157, 0, 2892);
+    			add_location(button0, file$6, 130, 0, 2473);
+    			add_location(button1, file$6, 134, 0, 2528);
+    			add_location(br0, file$6, 138, 0, 2591);
+    			add_location(button2, file$6, 140, 0, 2599);
+    			add_location(button3, file$6, 144, 0, 2649);
+    			add_location(button4, file$6, 148, 0, 2716);
+    			add_location(br1, file$6, 154, 0, 2783);
+    			add_location(button5, file$6, 157, 0, 2792);
+    			add_location(button6, file$6, 161, 0, 2911);
+    			add_location(button7, file$6, 165, 0, 3024);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -12496,18 +12502,17 @@ var app = (function () {
     		m: function mount(target, anchor) {
     			insert_dev(target, button0, anchor);
     			insert_dev(target, t1, anchor);
-    			insert_dev(target, br0, anchor);
-    			insert_dev(target, t2, anchor);
     			insert_dev(target, button1, anchor);
+    			insert_dev(target, t3, anchor);
+    			insert_dev(target, br0, anchor);
     			insert_dev(target, t4, anchor);
     			insert_dev(target, button2, anchor);
     			insert_dev(target, t6, anchor);
     			insert_dev(target, button3, anchor);
     			insert_dev(target, t8, anchor);
-    			insert_dev(target, br1, anchor);
-    			insert_dev(target, t9, anchor);
     			insert_dev(target, button4, anchor);
-    			append_dev(button4, t10);
+    			insert_dev(target, t10, anchor);
+    			insert_dev(target, br1, anchor);
     			insert_dev(target, t11, anchor);
     			insert_dev(target, button5, anchor);
     			append_dev(button5, t12);
@@ -12515,10 +12520,13 @@ var app = (function () {
     			insert_dev(target, button6, anchor);
     			append_dev(button6, t14);
     			insert_dev(target, t15, anchor);
-    			if (if_block0) if_block0.m(target, anchor);
-    			insert_dev(target, t16, anchor);
-    			if (if_block1) if_block1.m(target, anchor);
+    			insert_dev(target, button7, anchor);
+    			append_dev(button7, t16);
     			insert_dev(target, t17, anchor);
+    			if (if_block0) if_block0.m(target, anchor);
+    			insert_dev(target, t18, anchor);
+    			if (if_block1) if_block1.m(target, anchor);
+    			insert_dev(target, t19, anchor);
     			if (if_block2) if_block2.m(target, anchor);
     			insert_dev(target, if_block2_anchor, anchor);
     			current = true;
@@ -12526,27 +12534,28 @@ var app = (function () {
     			if (!mounted) {
     				dispose = [
     					listen_dev(button0, "click", /*gotoRandom*/ ctx[10], false, false, false),
-    					listen_dev(button1, "click", /*handleReset*/ ctx[8], false, false, false),
-    					listen_dev(button2, "click", /*handleRandomMessage*/ ctx[6], false, false, false),
-    					listen_dev(button3, "click", /*handleRandomLink*/ ctx[7], false, false, false),
-    					listen_dev(button4, "click", /*click_handler*/ ctx[11], false, false, false),
-    					listen_dev(button5, "click", /*click_handler_1*/ ctx[12], false, false, false),
-    					listen_dev(button6, "click", /*click_handler_2*/ ctx[13], false, false, false)
+    					listen_dev(button1, "click", /*handleLoadExample*/ ctx[11], false, false, false),
+    					listen_dev(button2, "click", /*handleReset*/ ctx[8], false, false, false),
+    					listen_dev(button3, "click", /*handleRandomMessage*/ ctx[6], false, false, false),
+    					listen_dev(button4, "click", /*handleRandomLink*/ ctx[7], false, false, false),
+    					listen_dev(button5, "click", /*click_handler*/ ctx[12], false, false, false),
+    					listen_dev(button6, "click", /*click_handler_1*/ ctx[13], false, false, false),
+    					listen_dev(button7, "click", /*click_handler_2*/ ctx[14], false, false, false)
     				];
 
     				mounted = true;
     			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if ((!current || dirty & /*SHOW_VIZ*/ 1) && t10_value !== (t10_value = (/*SHOW_VIZ*/ ctx[0]
+    			if ((!current || dirty & /*SHOW_VIZ*/ 1) && t12_value !== (t12_value = (/*SHOW_VIZ*/ ctx[0]
     			? "Showing vis-network"
-    			: "Hiding vis-network") + "")) set_data_dev(t10, t10_value);
+    			: "Hiding vis-network") + "")) set_data_dev(t12, t12_value);
 
-    			if ((!current || dirty & /*SHOW_SWIPE*/ 2) && t12_value !== (t12_value = (/*SHOW_SWIPE*/ ctx[1] ? "Showing swipe" : "Hiding swipe") + "")) set_data_dev(t12, t12_value);
+    			if ((!current || dirty & /*SHOW_SWIPE*/ 2) && t14_value !== (t14_value = (/*SHOW_SWIPE*/ ctx[1] ? "Showing swipe" : "Hiding swipe") + "")) set_data_dev(t14, t14_value);
 
-    			if ((!current || dirty & /*SHOW_DEBUG*/ 4) && t14_value !== (t14_value = (/*SHOW_DEBUG*/ ctx[2]
+    			if ((!current || dirty & /*SHOW_DEBUG*/ 4) && t16_value !== (t16_value = (/*SHOW_DEBUG*/ ctx[2]
     			? "Showing state debug"
-    			: "Hiding state debug") + "")) set_data_dev(t14, t14_value);
+    			: "Hiding state debug") + "")) set_data_dev(t16, t16_value);
 
     			if (/*SHOW_VIZ*/ ctx[0]) {
     				if (if_block0) {
@@ -12559,7 +12568,7 @@ var app = (function () {
     					if_block0 = create_if_block_2$1(ctx);
     					if_block0.c();
     					transition_in(if_block0, 1);
-    					if_block0.m(t16.parentNode, t16);
+    					if_block0.m(t18.parentNode, t18);
     				}
     			} else if (if_block0) {
     				group_outros();
@@ -12582,7 +12591,7 @@ var app = (function () {
     					if_block1 = create_if_block_1$1(ctx);
     					if_block1.c();
     					transition_in(if_block1, 1);
-    					if_block1.m(t17.parentNode, t17);
+    					if_block1.m(t19.parentNode, t19);
     				}
     			} else if (if_block1) {
     				group_outros();
@@ -12621,26 +12630,28 @@ var app = (function () {
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(button0);
     			if (detaching) detach_dev(t1);
-    			if (detaching) detach_dev(br0);
-    			if (detaching) detach_dev(t2);
     			if (detaching) detach_dev(button1);
+    			if (detaching) detach_dev(t3);
+    			if (detaching) detach_dev(br0);
     			if (detaching) detach_dev(t4);
     			if (detaching) detach_dev(button2);
     			if (detaching) detach_dev(t6);
     			if (detaching) detach_dev(button3);
     			if (detaching) detach_dev(t8);
-    			if (detaching) detach_dev(br1);
-    			if (detaching) detach_dev(t9);
     			if (detaching) detach_dev(button4);
+    			if (detaching) detach_dev(t10);
+    			if (detaching) detach_dev(br1);
     			if (detaching) detach_dev(t11);
     			if (detaching) detach_dev(button5);
     			if (detaching) detach_dev(t13);
     			if (detaching) detach_dev(button6);
     			if (detaching) detach_dev(t15);
-    			if (if_block0) if_block0.d(detaching);
-    			if (detaching) detach_dev(t16);
-    			if (if_block1) if_block1.d(detaching);
+    			if (detaching) detach_dev(button7);
     			if (detaching) detach_dev(t17);
+    			if (if_block0) if_block0.d(detaching);
+    			if (detaching) detach_dev(t18);
+    			if (if_block1) if_block1.d(detaching);
+    			if (detaching) detach_dev(t19);
     			if (if_block2) if_block2.d(detaching);
     			if (detaching) detach_dev(if_block2_anchor);
     			mounted = false;
@@ -12740,6 +12751,10 @@ var app = (function () {
     		$$invalidate(4, focus = randomKey(messages));
     	}
 
+    	function handleLoadExample() {
+    		$$invalidate(3, messages = getExampleData01());
+    	}
+
     	///
     	function createLink(a, b) {
     		if (!messages[a].after.includes(b)) messages[a].after.push(b);
@@ -12796,6 +12811,7 @@ var app = (function () {
     		handleReset,
     		handleAttachToFocus,
     		gotoRandom,
+    		handleLoadExample,
     		createLink,
     		messages,
     		focus,
@@ -12833,6 +12849,7 @@ var app = (function () {
     		handleReset,
     		handleAttachToFocus,
     		gotoRandom,
+    		handleLoadExample,
     		click_handler,
     		click_handler_1,
     		click_handler_2,

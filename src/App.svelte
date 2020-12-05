@@ -98,6 +98,10 @@
 		focus = randomKey(messages);
 	}
 
+	function handleLoadExample() {
+		messages = getExampleData01();
+	}
+
 ///
 
 	function createLink(a, b) {
@@ -126,6 +130,10 @@
 
 <button on:click={gotoRandom}>
 	GOTO RANDOM
+</button>
+
+<button on:click={handleLoadExample}>
+	LOAD EXAMPLE
 </button>
 
 <br />
