@@ -1,6 +1,5 @@
 <script>
 	import Conversation from './Conversation.svelte';
-	import Message from './Message.svelte';
 	import Viz from "./Viz.svelte";
 	import { LoremIpsum } from "lorem-ipsum";
 	// import './example.js';
@@ -24,7 +23,6 @@
 	let SHOW_SWIPE = false;
 	let SHOW_DEBUG = false;
 
-	let showClutter = false;
 
 // data utilities
 	function getEmptyMessage(){
@@ -104,16 +102,6 @@
 		messages = getExampleData01();
 	}
 
-	function handleToggleClutter() {
-		if (showClutter) {
-			showClutter = false;
-			SHOW_VIZ = true;
-		} else {
-			showClutter = true;
-		}
-	}
-
-
 ///
 
 	function createLink(a, b) {
@@ -140,90 +128,30 @@
 
 <!-- <h1>Focus: {focus}</h1> -->
 
-<button on:click={handleToggleClutter}>
-	Toggle Clutter
-</button>
-
-
-{#if showClutter}
-
-
-<button on:click={gotoRandom}>
-	GOTO RANDOM
-</button>
-<button on:click={handleLoadExample}>
-	LOAD EXAMPLE
-</button>
 
 <br />
 
-<button on:click={handleReset}>
-	RESET
-</button>
-
-<button on:click={handleRandomMessage}>
+<!-- 
+<!-- <button on:click={handleRandomMessage}>
 	ADD RANDOM MSG
 </button>
 
 <button on:click={handleRandomLink}>
 	ADD RANDOM LINK
-</button>
+</button> --> 
 
 
 
 <br />
 
 
-<button on:click={() => {SHOW_VIZ = !SHOW_VIZ}}>
-	{SHOW_VIZ ? 'Showing vis-network' : 'Hiding vis-network'}
-</button>
 
-<button on:click={() => {SHOW_SWIPE = !SHOW_SWIPE}}>
-	{SHOW_SWIPE ? 'Showing swipe' : 'Hiding swipe'}
-</button>
-
-<button on:click={() => {SHOW_DEBUG = !SHOW_DEBUG}}>
-	{SHOW_DEBUG ? 'Showing state debug' : 'Hiding state debug'}
-</button>
-
-
-{/if}
-
-
-
-
-
-<!-- // the good stuff -->
-
-
-<br />
-<br />
-
-Reading:
-
-<br />
-
-<Message 
-	body={messages[focus].body}
-	id={focus}
-/>
 <button on:click={handleAttachToFocus}>Reply</button>
 <input bind:value={next_message} >
-
-<br />
-<br />
-
 
 {#if SHOW_VIZ}
 	<Viz messages={messages} />
 {/if}
-
-{#if SHOW_SWIPE}
-<p>(If messages appear to overlap, toggle swipe on and off again.)</p>
-<h2>Swipe left and right on Before and After cards to browse branches</h2>
-	<Conversation messages={messages} focus={focus} />
-{/if}
-
 
 {#if SHOW_DEBUG}
 <pre>

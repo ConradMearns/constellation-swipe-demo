@@ -7,9 +7,9 @@
 </script>
 
 <ContactCard>
-    <span slot="name">
+    <!-- <span slot="name">
         ({index}/{index_limit}) {id}
-    </span>
+    </span> -->
     <span slot="message">
         {body}
     </span>
