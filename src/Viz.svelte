@@ -12,7 +12,7 @@
 	import { Network } from "vis-network";
 
     export let messages;
-    let breaks = -20;
+    let breaks = -30;
 
     let network = null;
     let container = null;
@@ -105,7 +105,7 @@
 </style>
 
 
-<p>Cutoff: negative will preform substr. Positive will break by wordcount</p><input type=number bind:value={breaks} min=-50 max=10>
+<!-- <p>Cutoff: negative will preform substr. Positive will break by wordcount</p><input type=number bind:value={breaks} min=-50 max=10> -->
 
 
 <div id="mynetwork"></div>

@@ -19,8 +19,8 @@
 	});
 
 
-	let SHOW_VIZ = true;
-	let SHOW_SWIPE = false;
+	let SHOW_VIZ = false;
+	let SHOW_SWIPE = true;
 	let SHOW_DEBUG = false;
 
 
@@ -128,30 +128,65 @@
 
 <!-- <h1>Focus: {focus}</h1> -->
 
+<button on:click={gotoRandom}>
+	GOTO RANDOM
+</button>
+
+<button on:click={handleLoadExample}>
+	LOAD EXAMPLE
+</button>
 
 <br />
 
-<!-- 
-<!-- <button on:click={handleRandomMessage}>
+<button on:click={handleReset}>
+	RESET
+</button>
+
+<button on:click={handleRandomMessage}>
 	ADD RANDOM MSG
 </button>
 
 <button on:click={handleRandomLink}>
 	ADD RANDOM LINK
-</button> --> 
+</button>
 
 
 
 <br />
 
 
+<button on:click={() => {SHOW_VIZ = !SHOW_VIZ}}>
+	{SHOW_VIZ ? 'Showing vis-network' : 'Hiding vis-network'}
+</button>
 
-<button on:click={handleAttachToFocus}>Reply</button>
-<input bind:value={next_message} >
+<button on:click={() => {SHOW_SWIPE = !SHOW_SWIPE}}>
+	{SHOW_SWIPE ? 'Showing swipe' : 'Hiding swipe'}
+</button>
+
+<button on:click={() => {SHOW_DEBUG = !SHOW_DEBUG}}>
+	{SHOW_DEBUG ? 'Showing state debug' : 'Hiding state debug'}
+</button>
+
+
+
+
+
+
+
+<!-- // the good stuff -->
 
 {#if SHOW_VIZ}
 	<Viz messages={messages} />
 {/if}
+
+{#if SHOW_SWIPE}
+<p>(If messages appear to overlap, toggle swipe on and off again.)</p>
+<h2>Swipe left and right on Before and After cards to browse branches</h2>
+	<input bind:value={next_message} >
+	<button on:click={handleAttachToFocus}>ATTACH TO FOCUS</button>
+	<Conversation messages={messages} focus={focus} />
+{/if}
+
 
 {#if SHOW_DEBUG}
 <pre>

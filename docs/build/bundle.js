@@ -107,9 +107,6 @@ var app = (function () {
         else if (node.getAttribute(attribute) !== value)
             node.setAttribute(attribute, value);
     }
-    function to_number(value) {
-        return value === '' ? null : +value;
-    }
     function children(element) {
         return Array.from(element.childNodes);
     }
@@ -11327,58 +11324,26 @@ var app = (function () {
     const file$5 = "src/Viz.svelte";
 
     function create_fragment$5(ctx) {
-    	let p;
-    	let input;
-    	let t1;
     	let div;
-    	let mounted;
-    	let dispose;
 
     	const block = {
     		c: function create() {
-    			p = element("p");
-    			p.textContent = "Cutoff: negative will preform substr. Positive will break by wordcount";
-    			input = element("input");
-    			t1 = space();
     			div = element("div");
-    			add_location(p, file$5, 107, 0, 2550);
-    			attr_dev(input, "type", "number");
-    			attr_dev(input, "min", "-50");
-    			attr_dev(input, "max", "10");
-    			add_location(input, file$5, 107, 77, 2627);
     			attr_dev(div, "id", "mynetwork");
     			attr_dev(div, "class", "svelte-1gdbbiz");
-    			add_location(div, file$5, 110, 0, 2684);
+    			add_location(div, file$5, 110, 0, 2693);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, p, anchor);
-    			insert_dev(target, input, anchor);
-    			set_input_value(input, /*breaks*/ ctx[0]);
-    			insert_dev(target, t1, anchor);
     			insert_dev(target, div, anchor);
-
-    			if (!mounted) {
-    				dispose = listen_dev(input, "input", /*input_input_handler*/ ctx[3]);
-    				mounted = true;
-    			}
     		},
-    		p: function update(ctx, [dirty]) {
-    			if (dirty & /*breaks*/ 1 && to_number(input.value) !== /*breaks*/ ctx[0]) {
-    				set_input_value(input, /*breaks*/ ctx[0]);
-    			}
-    		},
+    		p: noop,
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(p);
-    			if (detaching) detach_dev(input);
-    			if (detaching) detach_dev(t1);
     			if (detaching) detach_dev(div);
-    			mounted = false;
-    			dispose();
     		}
     	};
 
@@ -11397,7 +11362,7 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots("Viz", slots, []);
     	let { messages } = $$props;
-    	let breaks = -20;
+    	let breaks = -30;
     	let network = null;
     	let container = null;
 
@@ -11479,13 +11444,8 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<Viz> was created with unknown prop '${key}'`);
     	});
 
-    	function input_input_handler() {
-    		breaks = to_number(this.value);
-    		(($$invalidate(0, breaks), $$invalidate(2, container)), $$invalidate(1, messages));
-    	}
-
     	$$self.$$set = $$props => {
-    		if ("messages" in $$props) $$invalidate(1, messages = $$props.messages);
+    		if ("messages" in $$props) $$invalidate(0, messages = $$props.messages);
     	};
 
     	$$self.$capture_state = () => ({
@@ -11504,8 +11464,8 @@ var app = (function () {
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ("messages" in $$props) $$invalidate(1, messages = $$props.messages);
-    		if ("breaks" in $$props) $$invalidate(0, breaks = $$props.breaks);
+    		if ("messages" in $$props) $$invalidate(0, messages = $$props.messages);
+    		if ("breaks" in $$props) $$invalidate(1, breaks = $$props.breaks);
     		if ("network" in $$props) network = $$props.network;
     		if ("container" in $$props) $$invalidate(2, container = $$props.container);
     	};
@@ -11517,19 +11477,19 @@ var app = (function () {
     	$$self.$$.update = () => {
     		if ($$self.$$.dirty & /*breaks, container, messages*/ 7) {
     			 {
-    				(($$invalidate(0, breaks), $$invalidate(2, container)), $$invalidate(1, messages)); // this update gets executed whenever something on the RHS of an assignment is updated
+    				(($$invalidate(1, breaks), $$invalidate(2, container)), $$invalidate(0, messages)); // this update gets executed whenever something on the RHS of an assignment is updated
     				network = makeNetwork(container, makeData(messages));
     			}
     		}
     	};
 
-    	return [breaks, messages, container, input_input_handler];
+    	return [messages, breaks, container];
     }
 
     class Viz extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$5, create_fragment$5, safe_not_equal, { messages: 1 });
+    		init(this, options, instance$5, create_fragment$5, safe_not_equal, { messages: 0 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -11541,7 +11501,7 @@ var app = (function () {
     		const { ctx } = this.$$;
     		const props = options.props || {};
 
-    		if (/*messages*/ ctx[1] === undefined && !("messages" in props)) {
+    		if (/*messages*/ ctx[0] === undefined && !("messages" in props)) {
     			console.warn("<Viz> was created without expected prop 'messages'");
     		}
     	}
@@ -12209,13 +12169,13 @@ var app = (function () {
 
     const file$6 = "src/App.svelte";
 
-    // (178:0) {#if SHOW_VIZ}
-    function create_if_block_2$1(ctx) {
+    // (152:0) {#if SHOW_VIZ}
+    function create_if_block_1$1(ctx) {
     	let viz;
     	let current;
 
     	viz = new Viz({
-    			props: { messages: /*messages*/ ctx[3] },
+    			props: { messages: /*messages*/ ctx[0] },
     			$$inline: true
     		});
 
@@ -12229,7 +12189,7 @@ var app = (function () {
     		},
     		p: function update(ctx, dirty) {
     			const viz_changes = {};
-    			if (dirty & /*messages*/ 8) viz_changes.messages = /*messages*/ ctx[3];
+    			if (dirty & /*messages*/ 1) viz_changes.messages = /*messages*/ ctx[0];
     			viz.$set(viz_changes);
     		},
     		i: function intro(local) {
@@ -12248,129 +12208,20 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block_2$1.name,
-    		type: "if",
-    		source: "(178:0) {#if SHOW_VIZ}",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (182:0) {#if SHOW_SWIPE}
-    function create_if_block_1$1(ctx) {
-    	let p;
-    	let t1;
-    	let h2;
-    	let t3;
-    	let input;
-    	let t4;
-    	let button;
-    	let t6;
-    	let conversation;
-    	let current;
-    	let mounted;
-    	let dispose;
-
-    	conversation = new Conversation({
-    			props: {
-    				messages: /*messages*/ ctx[3],
-    				focus: /*focus*/ ctx[4]
-    			},
-    			$$inline: true
-    		});
-
-    	const block = {
-    		c: function create() {
-    			p = element("p");
-    			p.textContent = "(If messages appear to overlap, toggle swipe on and off again.)";
-    			t1 = space();
-    			h2 = element("h2");
-    			h2.textContent = "Swipe left and right on Before and After cards to browse branches";
-    			t3 = space();
-    			input = element("input");
-    			t4 = space();
-    			button = element("button");
-    			button.textContent = "ATTACH TO FOCUS";
-    			t6 = space();
-    			create_component(conversation.$$.fragment);
-    			add_location(p, file$6, 182, 0, 3251);
-    			add_location(h2, file$6, 183, 0, 3322);
-    			add_location(input, file$6, 184, 1, 3398);
-    			add_location(button, file$6, 185, 1, 3434);
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, p, anchor);
-    			insert_dev(target, t1, anchor);
-    			insert_dev(target, h2, anchor);
-    			insert_dev(target, t3, anchor);
-    			insert_dev(target, input, anchor);
-    			set_input_value(input, /*next_message*/ ctx[5]);
-    			insert_dev(target, t4, anchor);
-    			insert_dev(target, button, anchor);
-    			insert_dev(target, t6, anchor);
-    			mount_component(conversation, target, anchor);
-    			current = true;
-
-    			if (!mounted) {
-    				dispose = [
-    					listen_dev(input, "input", /*input_input_handler*/ ctx[15]),
-    					listen_dev(button, "click", /*handleAttachToFocus*/ ctx[9], false, false, false)
-    				];
-
-    				mounted = true;
-    			}
-    		},
-    		p: function update(ctx, dirty) {
-    			if (dirty & /*next_message*/ 32 && input.value !== /*next_message*/ ctx[5]) {
-    				set_input_value(input, /*next_message*/ ctx[5]);
-    			}
-
-    			const conversation_changes = {};
-    			if (dirty & /*messages*/ 8) conversation_changes.messages = /*messages*/ ctx[3];
-    			if (dirty & /*focus*/ 16) conversation_changes.focus = /*focus*/ ctx[4];
-    			conversation.$set(conversation_changes);
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(conversation.$$.fragment, local);
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			transition_out(conversation.$$.fragment, local);
-    			current = false;
-    		},
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(p);
-    			if (detaching) detach_dev(t1);
-    			if (detaching) detach_dev(h2);
-    			if (detaching) detach_dev(t3);
-    			if (detaching) detach_dev(input);
-    			if (detaching) detach_dev(t4);
-    			if (detaching) detach_dev(button);
-    			if (detaching) detach_dev(t6);
-    			destroy_component(conversation, detaching);
-    			mounted = false;
-    			run_all(dispose);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
     		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(182:0) {#if SHOW_SWIPE}",
+    		source: "(152:0) {#if SHOW_VIZ}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (191:0) {#if SHOW_DEBUG}
+    // (156:0) {#if SHOW_DEBUG}
     function create_if_block$2(ctx) {
     	let pre;
     	let t0;
-    	let t1_value = JSON.stringify(/*messages*/ ctx[3], null, " ") + "";
+    	let t1_value = JSON.stringify(/*messages*/ ctx[0], null, " ") + "";
     	let t1;
 
     	const block = {
@@ -12378,7 +12229,7 @@ var app = (function () {
     			pre = element("pre");
     			t0 = text("State Debug:\n");
     			t1 = text(t1_value);
-    			add_location(pre, file$6, 191, 0, 3575);
+    			add_location(pre, file$6, 156, 0, 2800);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, pre, anchor);
@@ -12386,7 +12237,7 @@ var app = (function () {
     			append_dev(pre, t1);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*messages*/ 8 && t1_value !== (t1_value = JSON.stringify(/*messages*/ ctx[3], null, " ") + "")) set_data_dev(t1, t1_value);
+    			if (dirty & /*messages*/ 1 && t1_value !== (t1_value = JSON.stringify(/*messages*/ ctx[0], null, " ") + "")) set_data_dev(t1, t1_value);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(pre);
@@ -12397,7 +12248,7 @@ var app = (function () {
     		block,
     		id: create_if_block$2.name,
     		type: "if",
-    		source: "(191:0) {#if SHOW_DEBUG}",
+    		source: "(156:0) {#if SHOW_DEBUG}",
     		ctx
     	});
 
@@ -12405,255 +12256,100 @@ var app = (function () {
     }
 
     function create_fragment$6(ctx) {
-    	let button0;
-    	let t1;
-    	let button1;
-    	let t3;
     	let br0;
-    	let t4;
-    	let button2;
-    	let t6;
-    	let button3;
-    	let t8;
-    	let button4;
-    	let t10;
+    	let t0;
     	let br1;
-    	let t11;
-    	let button5;
-
-    	let t12_value = (/*SHOW_VIZ*/ ctx[0]
-    	? "Showing vis-network"
-    	: "Hiding vis-network") + "";
-
-    	let t12;
-    	let t13;
-    	let button6;
-    	let t14_value = (/*SHOW_SWIPE*/ ctx[1] ? "Showing swipe" : "Hiding swipe") + "";
-    	let t14;
-    	let t15;
-    	let button7;
-
-    	let t16_value = (/*SHOW_DEBUG*/ ctx[2]
-    	? "Showing state debug"
-    	: "Hiding state debug") + "";
-
-    	let t16;
-    	let t17;
-    	let t18;
-    	let t19;
-    	let if_block2_anchor;
+    	let t1;
+    	let button;
+    	let t3;
+    	let input;
+    	let t4;
+    	let t5;
+    	let if_block1_anchor;
     	let current;
     	let mounted;
     	let dispose;
-    	let if_block0 = /*SHOW_VIZ*/ ctx[0] && create_if_block_2$1(ctx);
-    	let if_block1 = /*SHOW_SWIPE*/ ctx[1] && create_if_block_1$1(ctx);
-    	let if_block2 = /*SHOW_DEBUG*/ ctx[2] && create_if_block$2(ctx);
+    	let if_block0 = /*SHOW_VIZ*/ ctx[2] && create_if_block_1$1(ctx);
+    	let if_block1 = /*SHOW_DEBUG*/ ctx[3] && create_if_block$2(ctx);
 
     	const block = {
     		c: function create() {
-    			button0 = element("button");
-    			button0.textContent = "GOTO RANDOM";
-    			t1 = space();
-    			button1 = element("button");
-    			button1.textContent = "LOAD EXAMPLE";
-    			t3 = space();
     			br0 = element("br");
-    			t4 = space();
-    			button2 = element("button");
-    			button2.textContent = "RESET";
-    			t6 = space();
-    			button3 = element("button");
-    			button3.textContent = "ADD RANDOM MSG";
-    			t8 = space();
-    			button4 = element("button");
-    			button4.textContent = "ADD RANDOM LINK";
-    			t10 = space();
+    			t0 = space();
     			br1 = element("br");
-    			t11 = space();
-    			button5 = element("button");
-    			t12 = text(t12_value);
-    			t13 = space();
-    			button6 = element("button");
-    			t14 = text(t14_value);
-    			t15 = space();
-    			button7 = element("button");
-    			t16 = text(t16_value);
-    			t17 = space();
+    			t1 = space();
+    			button = element("button");
+    			button.textContent = "Reply";
+    			t3 = space();
+    			input = element("input");
+    			t4 = space();
     			if (if_block0) if_block0.c();
-    			t18 = space();
+    			t5 = space();
     			if (if_block1) if_block1.c();
-    			t19 = space();
-    			if (if_block2) if_block2.c();
-    			if_block2_anchor = empty();
-    			add_location(button0, file$6, 130, 0, 2473);
-    			add_location(button1, file$6, 134, 0, 2528);
-    			add_location(br0, file$6, 138, 0, 2591);
-    			add_location(button2, file$6, 140, 0, 2599);
-    			add_location(button3, file$6, 144, 0, 2649);
-    			add_location(button4, file$6, 148, 0, 2716);
-    			add_location(br1, file$6, 154, 0, 2783);
-    			add_location(button5, file$6, 157, 0, 2792);
-    			add_location(button6, file$6, 161, 0, 2911);
-    			add_location(button7, file$6, 165, 0, 3024);
+    			if_block1_anchor = empty();
+    			add_location(br0, file$6, 131, 0, 2474);
+    			add_location(br1, file$6, 144, 0, 2632);
+    			add_location(button, file$6, 148, 0, 2642);
+    			add_location(input, file$6, 149, 0, 2696);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, button0, anchor);
-    			insert_dev(target, t1, anchor);
-    			insert_dev(target, button1, anchor);
-    			insert_dev(target, t3, anchor);
     			insert_dev(target, br0, anchor);
-    			insert_dev(target, t4, anchor);
-    			insert_dev(target, button2, anchor);
-    			insert_dev(target, t6, anchor);
-    			insert_dev(target, button3, anchor);
-    			insert_dev(target, t8, anchor);
-    			insert_dev(target, button4, anchor);
-    			insert_dev(target, t10, anchor);
+    			insert_dev(target, t0, anchor);
     			insert_dev(target, br1, anchor);
-    			insert_dev(target, t11, anchor);
-    			insert_dev(target, button5, anchor);
-    			append_dev(button5, t12);
-    			insert_dev(target, t13, anchor);
-    			insert_dev(target, button6, anchor);
-    			append_dev(button6, t14);
-    			insert_dev(target, t15, anchor);
-    			insert_dev(target, button7, anchor);
-    			append_dev(button7, t16);
-    			insert_dev(target, t17, anchor);
+    			insert_dev(target, t1, anchor);
+    			insert_dev(target, button, anchor);
+    			insert_dev(target, t3, anchor);
+    			insert_dev(target, input, anchor);
+    			set_input_value(input, /*next_message*/ ctx[1]);
+    			insert_dev(target, t4, anchor);
     			if (if_block0) if_block0.m(target, anchor);
-    			insert_dev(target, t18, anchor);
+    			insert_dev(target, t5, anchor);
     			if (if_block1) if_block1.m(target, anchor);
-    			insert_dev(target, t19, anchor);
-    			if (if_block2) if_block2.m(target, anchor);
-    			insert_dev(target, if_block2_anchor, anchor);
+    			insert_dev(target, if_block1_anchor, anchor);
     			current = true;
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(button0, "click", /*gotoRandom*/ ctx[10], false, false, false),
-    					listen_dev(button1, "click", /*handleLoadExample*/ ctx[11], false, false, false),
-    					listen_dev(button2, "click", /*handleReset*/ ctx[8], false, false, false),
-    					listen_dev(button3, "click", /*handleRandomMessage*/ ctx[6], false, false, false),
-    					listen_dev(button4, "click", /*handleRandomLink*/ ctx[7], false, false, false),
-    					listen_dev(button5, "click", /*click_handler*/ ctx[12], false, false, false),
-    					listen_dev(button6, "click", /*click_handler_1*/ ctx[13], false, false, false),
-    					listen_dev(button7, "click", /*click_handler_2*/ ctx[14], false, false, false)
+    					listen_dev(button, "click", /*handleAttachToFocus*/ ctx[4], false, false, false),
+    					listen_dev(input, "input", /*input_input_handler*/ ctx[5])
     				];
 
     				mounted = true;
     			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if ((!current || dirty & /*SHOW_VIZ*/ 1) && t12_value !== (t12_value = (/*SHOW_VIZ*/ ctx[0]
-    			? "Showing vis-network"
-    			: "Hiding vis-network") + "")) set_data_dev(t12, t12_value);
-
-    			if ((!current || dirty & /*SHOW_SWIPE*/ 2) && t14_value !== (t14_value = (/*SHOW_SWIPE*/ ctx[1] ? "Showing swipe" : "Hiding swipe") + "")) set_data_dev(t14, t14_value);
-
-    			if ((!current || dirty & /*SHOW_DEBUG*/ 4) && t16_value !== (t16_value = (/*SHOW_DEBUG*/ ctx[2]
-    			? "Showing state debug"
-    			: "Hiding state debug") + "")) set_data_dev(t16, t16_value);
-
-    			if (/*SHOW_VIZ*/ ctx[0]) {
-    				if (if_block0) {
-    					if_block0.p(ctx, dirty);
-
-    					if (dirty & /*SHOW_VIZ*/ 1) {
-    						transition_in(if_block0, 1);
-    					}
-    				} else {
-    					if_block0 = create_if_block_2$1(ctx);
-    					if_block0.c();
-    					transition_in(if_block0, 1);
-    					if_block0.m(t18.parentNode, t18);
-    				}
-    			} else if (if_block0) {
-    				group_outros();
-
-    				transition_out(if_block0, 1, 1, () => {
-    					if_block0 = null;
-    				});
-
-    				check_outros();
+    			if (dirty & /*next_message*/ 2 && input.value !== /*next_message*/ ctx[1]) {
+    				set_input_value(input, /*next_message*/ ctx[1]);
     			}
 
-    			if (/*SHOW_SWIPE*/ ctx[1]) {
-    				if (if_block1) {
-    					if_block1.p(ctx, dirty);
-
-    					if (dirty & /*SHOW_SWIPE*/ 2) {
-    						transition_in(if_block1, 1);
-    					}
-    				} else {
-    					if_block1 = create_if_block_1$1(ctx);
-    					if_block1.c();
-    					transition_in(if_block1, 1);
-    					if_block1.m(t19.parentNode, t19);
-    				}
-    			} else if (if_block1) {
-    				group_outros();
-
-    				transition_out(if_block1, 1, 1, () => {
-    					if_block1 = null;
-    				});
-
-    				check_outros();
-    			}
-
-    			if (/*SHOW_DEBUG*/ ctx[2]) {
-    				if (if_block2) {
-    					if_block2.p(ctx, dirty);
-    				} else {
-    					if_block2 = create_if_block$2(ctx);
-    					if_block2.c();
-    					if_block2.m(if_block2_anchor.parentNode, if_block2_anchor);
-    				}
-    			} else if (if_block2) {
-    				if_block2.d(1);
-    				if_block2 = null;
-    			}
+    			if (/*SHOW_VIZ*/ ctx[2]) if_block0.p(ctx, dirty);
+    			if (/*SHOW_DEBUG*/ ctx[3]) if_block1.p(ctx, dirty);
     		},
     		i: function intro(local) {
     			if (current) return;
     			transition_in(if_block0);
-    			transition_in(if_block1);
     			current = true;
     		},
     		o: function outro(local) {
     			transition_out(if_block0);
-    			transition_out(if_block1);
     			current = false;
     		},
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(button0);
-    			if (detaching) detach_dev(t1);
-    			if (detaching) detach_dev(button1);
-    			if (detaching) detach_dev(t3);
     			if (detaching) detach_dev(br0);
-    			if (detaching) detach_dev(t4);
-    			if (detaching) detach_dev(button2);
-    			if (detaching) detach_dev(t6);
-    			if (detaching) detach_dev(button3);
-    			if (detaching) detach_dev(t8);
-    			if (detaching) detach_dev(button4);
-    			if (detaching) detach_dev(t10);
+    			if (detaching) detach_dev(t0);
     			if (detaching) detach_dev(br1);
-    			if (detaching) detach_dev(t11);
-    			if (detaching) detach_dev(button5);
-    			if (detaching) detach_dev(t13);
-    			if (detaching) detach_dev(button6);
-    			if (detaching) detach_dev(t15);
-    			if (detaching) detach_dev(button7);
-    			if (detaching) detach_dev(t17);
+    			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(button);
+    			if (detaching) detach_dev(t3);
+    			if (detaching) detach_dev(input);
+    			if (detaching) detach_dev(t4);
     			if (if_block0) if_block0.d(detaching);
-    			if (detaching) detach_dev(t18);
+    			if (detaching) detach_dev(t5);
     			if (if_block1) if_block1.d(detaching);
-    			if (detaching) detach_dev(t19);
-    			if (if_block2) if_block2.d(detaching);
-    			if (detaching) detach_dev(if_block2_anchor);
+    			if (detaching) detach_dev(if_block1_anchor);
     			mounted = false;
     			run_all(dispose);
     		}
@@ -12684,15 +12380,15 @@ var app = (function () {
     			wordsPerSentence: { max: 16, min: 4 }
     		});
 
-    	let SHOW_VIZ = false;
-    	let SHOW_SWIPE = true;
+    	let SHOW_VIZ = true;
+    	let SHOW_SWIPE = false;
     	let SHOW_DEBUG = false;
 
     	function createNewMessage(msg) {
     		let newMsg = getEmptyMessage();
     		let msg_hash = funhash(msg);
     		newMsg.body = msg;
-    		$$invalidate(3, messages[msg_hash] = newMsg, messages);
+    		$$invalidate(0, messages[msg_hash] = newMsg, messages);
     		createLink(focus, msg_hash);
     	}
 
@@ -12718,10 +12414,10 @@ var app = (function () {
     		let msg_hash = funhash(msg_body);
     		let msg = getEmptyMessage();
     		msg.body = msg_body;
-    		$$invalidate(3, messages[msg_hash] = msg, messages);
+    		$$invalidate(0, messages[msg_hash] = msg, messages);
 
     		if (focus === null) {
-    			$$invalidate(4, focus = msg_hash);
+    			focus = msg_hash;
     		} else {
     			let r = randomKey(messages);
     			createLink(r, msg_hash);
@@ -12732,27 +12428,27 @@ var app = (function () {
     		let a = randomKey(messages);
     		let b = randomKey(messages);
     		createLink(a, b);
-    		$$invalidate(3, messages); // sorry rich
+    		$$invalidate(0, messages); // sorry rich
     	}
 
     	function handleReset() {
-    		$$invalidate(3, messages = {});
-    		$$invalidate(4, focus = null);
+    		$$invalidate(0, messages = {});
+    		focus = null;
     	}
 
     	function handleAttachToFocus() {
     		if (next_message != null && next_message != "") {
     			let newMsg = createNewMessage(next_message);
-    			$$invalidate(5, next_message = "");
+    			$$invalidate(1, next_message = "");
     		} // createLink(focus, newMsg);
     	}
 
     	function gotoRandom() {
-    		$$invalidate(4, focus = randomKey(messages));
+    		focus = randomKey(messages);
     	}
 
     	function handleLoadExample() {
-    		$$invalidate(3, messages = getExampleData01());
+    		$$invalidate(0, messages = getExampleData01());
     	}
 
     	///
@@ -12773,21 +12469,9 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<App> was created with unknown prop '${key}'`);
     	});
 
-    	const click_handler = () => {
-    		$$invalidate(0, SHOW_VIZ = !SHOW_VIZ);
-    	};
-
-    	const click_handler_1 = () => {
-    		$$invalidate(1, SHOW_SWIPE = !SHOW_SWIPE);
-    	};
-
-    	const click_handler_2 = () => {
-    		$$invalidate(2, SHOW_DEBUG = !SHOW_DEBUG);
-    	};
-
     	function input_input_handler() {
     		next_message = this.value;
-    		$$invalidate(5, next_message);
+    		$$invalidate(1, next_message);
     	}
 
     	$$self.$capture_state = () => ({
@@ -12821,16 +12505,16 @@ var app = (function () {
 
     	$$self.$inject_state = $$props => {
     		if ("getExampleData" in $$props) getExampleData = $$props.getExampleData;
-    		if ("SHOW_VIZ" in $$props) $$invalidate(0, SHOW_VIZ = $$props.SHOW_VIZ);
-    		if ("SHOW_SWIPE" in $$props) $$invalidate(1, SHOW_SWIPE = $$props.SHOW_SWIPE);
-    		if ("SHOW_DEBUG" in $$props) $$invalidate(2, SHOW_DEBUG = $$props.SHOW_DEBUG);
+    		if ("SHOW_VIZ" in $$props) $$invalidate(2, SHOW_VIZ = $$props.SHOW_VIZ);
+    		if ("SHOW_SWIPE" in $$props) SHOW_SWIPE = $$props.SHOW_SWIPE;
+    		if ("SHOW_DEBUG" in $$props) $$invalidate(3, SHOW_DEBUG = $$props.SHOW_DEBUG);
     		if ("funhash" in $$props) funhash = $$props.funhash;
     		if ("randomProperty" in $$props) randomProperty = $$props.randomProperty;
     		if ("randomKey" in $$props) randomKey = $$props.randomKey;
-    		if ("messages" in $$props) $$invalidate(3, messages = $$props.messages);
-    		if ("focus" in $$props) $$invalidate(4, focus = $$props.focus);
+    		if ("messages" in $$props) $$invalidate(0, messages = $$props.messages);
+    		if ("focus" in $$props) focus = $$props.focus;
     		if ("focus_list" in $$props) focus_list = $$props.focus_list;
-    		if ("next_message" in $$props) $$invalidate(5, next_message = $$props.next_message);
+    		if ("next_message" in $$props) $$invalidate(1, next_message = $$props.next_message);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -12838,21 +12522,11 @@ var app = (function () {
     	}
 
     	return [
-    		SHOW_VIZ,
-    		SHOW_SWIPE,
-    		SHOW_DEBUG,
     		messages,
-    		focus,
     		next_message,
-    		handleRandomMessage,
-    		handleRandomLink,
-    		handleReset,
+    		SHOW_VIZ,
+    		SHOW_DEBUG,
     		handleAttachToFocus,
-    		gotoRandom,
-    		handleLoadExample,
-    		click_handler,
-    		click_handler_1,
-    		click_handler_2,
     		input_input_handler
     	];
     }
